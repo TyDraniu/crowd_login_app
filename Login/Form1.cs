@@ -10,7 +10,6 @@ using System.Reactive.Concurrency;
 using System.Threading;
 using RestSharp;
 using StashRest;
-using System.Reflection;
 
 namespace Login
 {
@@ -187,8 +186,10 @@ namespace Login
 
             try
             {
-                RestClient client = new RestClient(Stash.baseUrl);
-                client.Authenticator = new HttpBasicAuthenticator(user, password);
+                RestClient client = new RestClient(Stash.baseUrl)
+                {
+                    Authenticator = new HttpBasicAuthenticator(user, password)
+                };
 
                 List<PValue> projekty = await Task.Factory.StartNew(() => Stash.GetProjectsAsync(client, 25));
 
@@ -300,7 +301,6 @@ namespace Login
                     List<string> users = await s.findAllPrincipalsAsync(token);
                     Dictionary<string, int> UsersWithWrongPassword = new Dictionary<string, int>();
 
-
                     foreach (string user in users)
                     {
                         this.Text = timer.Elapsed.ToString(@"mm\:ss\:ff");
@@ -311,8 +311,7 @@ namespace Login
                             {
                                 string zleHasla = SOAPuser.attributes.SingleOrDefault(x => x.name == "invalidPasswordAttempts")?.values[0];
 
-                                int wrPass;
-                                int.TryParse(zleHasla, out wrPass);
+                                int.TryParse(zleHasla, out int wrPass);
                                 if (wrPass > 2)
                                 {
                                     UsersWithWrongPassword.Add(SOAPuser.attributes.SingleOrDefault(x => x.name == "displayName")?.values[0], wrPass);
@@ -338,13 +337,14 @@ namespace Login
 
         private async void button5_Click(object sender, EventArgs e)
         {
-            List<string> grupy = new List<string>();
-
-            grupy.Add("jira-users");
-            grupy.Add("jira-restricted-users");
-            grupy.Add("confluence-users");
-            grupy.Add("confluence-restricted-users");
-            grupy.Add("stash-users");
+            List<string> grupy = new List<string>
+            {
+                "jira-users",
+                "jira-restricted-users",
+                "confluence-users",
+                "confluence-restricted-users",
+                "stash-users"
+            };
 
             timer.Start();
             using (Authentication a = new Authentication())
@@ -395,10 +395,11 @@ namespace Login
 
         private async void button6_Click(object sender, EventArgs e)
         {
-            List<string> grupy = new List<string>();
-
-            grupy.Add("jira-users");
-            grupy.Add("jira-restricted-users");
+            List<string> grupy = new List<string>
+            {
+                "jira-users",
+                "jira-restricted-users"
+            };
 
             timer.Start();
             using (Authentication a = new Authentication())
