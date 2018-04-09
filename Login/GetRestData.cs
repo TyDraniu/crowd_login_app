@@ -13,6 +13,7 @@ namespace Login
     public class Stash
     {
         public const string baseUrl = "http://stashurl";
+
         /// <summary>
         /// Zwraca datę ostatniego commitu na repozytorium
         /// </summary>

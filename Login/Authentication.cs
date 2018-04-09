@@ -57,12 +57,16 @@ namespace Login
             bool authenticated = false;
             principal = null;
 
-            ApplicationAuthenticationContext appContext = new ApplicationAuthenticationContext();
-            appContext.name = APPLICATION_NAME;
+            ApplicationAuthenticationContext appContext = new ApplicationAuthenticationContext
+            {
+                name = APPLICATION_NAME
+            };
 
             // Provide the password associated with the application, as set-up in Crowd.
-            PasswordCredential pwdApp = new PasswordCredential();
-            pwdApp.credential = APPLICATION_PWD;
+            PasswordCredential pwdApp = new PasswordCredential
+            {
+                credential = APPLICATION_PWD
+            };
             appContext.credential = pwdApp;
 
             try
@@ -73,13 +77,17 @@ namespace Login
                 if (appToken != null)
                 {
                     // Set-up authentication context for the principal (user)
-                    UserAuthenticationContext userContext = new UserAuthenticationContext();
-                    userContext.application = APPLICATION_NAME;
-                    userContext.name = username;
+                    UserAuthenticationContext userContext = new UserAuthenticationContext
+                    {
+                        application = APPLICATION_NAME,
+                        name = username
+                    };
 
                     // Provide the password for authenticating this principal (user)
-                    PasswordCredential pwdPrincipal = new PasswordCredential();
-                    pwdPrincipal.credential = password;
+                    PasswordCredential pwdPrincipal = new PasswordCredential
+                    {
+                        credential = password
+                    };
                     userContext.credential = pwdPrincipal;
 
                     // Authenticate the principal (will fire a SOAPException if authentication fails).
@@ -133,12 +141,16 @@ namespace Login
         {
             try
             {
-                ApplicationAuthenticationContext appContext = new ApplicationAuthenticationContext();
-                appContext.name = APPLICATION_NAME;
+                ApplicationAuthenticationContext appContext = new ApplicationAuthenticationContext
+                {
+                    name = APPLICATION_NAME
+                };
 
                 // Provide the password associated with the application, as set-up in Crowd.
-                PasswordCredential pwdApp = new PasswordCredential();
-                pwdApp.credential = APPLICATION_PWD;
+                PasswordCredential pwdApp = new PasswordCredential
+                {
+                    credential = APPLICATION_PWD
+                };
                 appContext.credential = pwdApp;
 
                 // Authenticate the application (will fire a SOAPException if authentication fails).
